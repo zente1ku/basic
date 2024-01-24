@@ -12,6 +12,13 @@ def get_instruction(code_line: str) -> dict:
         variable_name = components[0]
         value = components[2]
         instruction = {"operation": "assign", "variable_name": variable_name, "value": value}
+    elif 'print' in code_line:
+        components = code_line.split(' ')
+        value = components[1]
+        if value in variables:
+            value = variables[value]
+
+        instruction = {"operation": "print", "value": value}
 
     return instruction
 
@@ -28,6 +35,9 @@ def execute(code_line: str) -> None:
         # Обращаемся к глобальному словарю переменных, 
         # записываем по имени переменной соответствующее значение
         variables[variable_name] = value
+    elif instruction['operation'] == 'print':
+        value = instruction["value"]
+        print(value)
 
 
 if __name__ == '__main__':
