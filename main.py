@@ -10,9 +10,28 @@ def get_instruction(code_line: str) -> dict:
         # Затем извлекаем из неё имя переменной и значение
         components = code_line.split(" ")
         variable_name = components[0]
-        value = components[2]
+        value = int(components[2])
         instruction = {"operation": "assign", "variable_name": variable_name, "value": value}
-
+    elif ">" in code_line or "<" in code_line or "==" in code_line or "!=":
+        result = False
+        left = components[0]
+        right = components[2]
+        if components[1] == ">":
+            result = left > right
+            compare_type = 'greater' 
+        elif components[1] == "<":
+            result = left < right
+            compare_type = 'less'
+        elif components[1] == "==":
+            result = left == right
+            compare_type = 'equal'
+        elif components[1] == "!=":
+            result = left != right
+            compare_type = 'not_equal' 
+            
+            
+    
+    instruction = {"operation": "compare", "compare_type": compare_type, "result": result }
     return instruction
 
 
